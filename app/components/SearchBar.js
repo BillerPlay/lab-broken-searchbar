@@ -1,6 +1,10 @@
+"use client"
+
+import {useState} from "react";
 import styles from "./SearchBar.module.css";
 
-export default function SearchBar() {
+export default function SearchBar({query, onSearch, filterBy, onFilterChange}) {
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.inputGroup}>
@@ -23,8 +27,23 @@ export default function SearchBar() {
           type="text"
           placeholder="Search characters..."
           className={styles.input}
+          value={query}
+          onChange={(e) => onSearch(e.target.value)}
         />
+        {query && (
+          <button className={styles.clearBtn} onClick={() => onSearch("")}>Clear</button>
+        )
+        }
       </div>
+      <select
+        className={styles.select}
+        value={filterBy}
+        onChange={(e) => onFilterChange(e.target.value)}
+      >
+        <option value="name">Name</option>
+        <option value="species">Species</option>
+        <option value="status">Status</option>
+      </select>
     </div>
   );
 }

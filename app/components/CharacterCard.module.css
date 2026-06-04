@@ -67,3 +67,9 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.name mark {
+  background-color: yellow;
+  color: inherit;
+  border-radius: 2px;
+}

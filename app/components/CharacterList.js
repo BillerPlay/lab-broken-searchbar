@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import CharacterCard from "./CharacterCard";
 import styles from "./CharacterList.module.css";
 
-export default function CharacterList() {
+export default function CharacterList({query, filterBy}) {
   const [characters, setCharacters] = useState([]);
 
   useEffect(() => {
@@ -13,10 +13,16 @@ export default function CharacterList() {
       .then((data) => setCharacters(data.results));
   }, []);
 
+  const filtered = characters.filter((c) =>
+    c[filterBy].toLowerCase().includes(query.toLowerCase())
+  );
+  if(filtered.length === 0){
+    return <p className={styles.empty}> No characters found.</p>
+  }
   return (
     <div className={styles.grid}>
-      {characters.map((character) => (
-        <CharacterCard key={character.id} character={character} />
+      {filtered.map((character) => (
+        <CharacterCard key={character.id} character={character} query={query} filterBy={filterBy}/>
       ))}
     </div>
   );
